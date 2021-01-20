@@ -37,7 +37,7 @@ always_allow_html: yes
 **Institution**: University of Alabama at Birmingham  
 **Location**: 542 Biomedical Research Building 2, Birmingham, AL 35294  
 
-# Getting Started
+# Analysis Parameters
 
 ## Parameters
 

@@ -205,7 +205,7 @@ corrplot(cor.r,
          addgrid.col = NA)
 ```
 
-![\label{correlation_patients}Correlation Matrix of Patient Characteristics. All data were obtained from electronic medical records and de-identified in accordance with the UAB Institutional Review Board requirements.](ComprehensiveAnalysis_2021_files/figure-html/correlation_patients-1.png)
+![\label{correlation_patients}Correlation Matrix of Patient Characteristics. All data were obtained from electronic medical records and de-identified in accordance with the UAB Institutional Review Board requirements.](README_files/figure-html/correlation_patients-1.png)
 
 ```r
 pdf(file=paste0("../3_Output/_Patient/Patient.Correlation.pdf"))
@@ -244,7 +244,7 @@ patient.igraph<-simplify(patient.igraph)
 plot(patient.igraph, edge.arrow.size=0.0, cex=0.5)
 ```
 
-![\label{correlation_patients}Correlation Matrix of Patient Characteristics. All data were obtained from electronic medical records and de-identified in accordance with the UAB Institutional Review Board requirements.](ComprehensiveAnalysis_2021_files/figure-html/correlation_patients-2.png)
+![\label{correlation_patients}Correlation Matrix of Patient Characteristics. All data were obtained from electronic medical records and de-identified in accordance with the UAB Institutional Review Board requirements.](README_files/figure-html/correlation_patients-2.png)
 
 ```r
 # library("threejs")
@@ -452,7 +452,7 @@ dds <- estimateDispersions(dds)
 plotDispEsts(dds)
 ```
 
-![](ComprehensiveAnalysis_2021_files/figure-html/DESeq2-1.png)<!-- -->
+![](README_files/figure-html/DESeq2-1.png)<!-- -->
 
 ```r
 png(file=paste0("../3_Output/1_RNA/", COMPARISON, "/", COMPARISON, "_Dispersion.png"))
@@ -616,7 +616,7 @@ NGENES = 1000
 mds<-plotMDS.default(MDS_data, gene.selection = "common", top = NGENES, col = colData_all$Color)
 ```
 
-![](ComprehensiveAnalysis_2021_files/figure-html/MDS-1.png)<!-- -->
+![](README_files/figure-html/MDS-1.png)<!-- -->
 
 ```r
 ## Extract genes from this
@@ -636,7 +636,7 @@ test<-test[complete.cases(test),]
 pQQ(test$pvalue, lim=c(0,10))
 ```
 
-![](ComprehensiveAnalysis_2021_files/figure-html/QQ-Plot-1.png)<!-- -->
+![](README_files/figure-html/QQ-Plot-1.png)<!-- -->
 
 ```r
 png(file=paste0("../3_Output/1_RNA/", COMPARISON,  "/", COMPARISON,"_QQ.Plot.png"))
@@ -693,7 +693,7 @@ pcaCharts=function(x) {
 pcaCharts(pca.comp)
 ```
 
-![](ComprehensiveAnalysis_2021_files/figure-html/PCA_Features-1.png)<!-- -->
+![](README_files/figure-html/PCA_Features-1.png)<!-- -->
 
 ```r
 png(file=paste0("../3_Output/1_RNA/", COMPARISON,  "/", COMPARISON, "_PCA.Charts.png"))
@@ -735,8 +735,8 @@ fig
 ```
 
 ```{=html}
-<div id="htmlwidget-e54acf2131c7178d98e5" style="width:672px;height:480px;" class="plotly html-widget"></div>
-<script type="application/json" data-for="htmlwidget-e54acf2131c7178d98e5">{"x":{"visdat":{"10942eb245e4":["function () ","plotlyVisDat"]},"cur_data":"10942eb245e4","attrs":{"10942eb245e4":{"x":{},"y":{},"z":{},"color":{},"colors":["#7570b3","#1b9e77","#d95f02","#e7298a"],"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d","mode":"markers","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"scene":{"xaxis":{"title":"PC1"},"yaxis":{"title":"PC2"},"zaxis":{"title":"PC3"}},"hovermode":"closest","showlegend":true},"source":"A","config":{"showSendToCloud":false},"data":[{"x":[-1529671.24100752,-334757.29228236,-612190.108321944,-954148.72411323,-902822.044248369,609478.534018162,838302.877830159,191569.728652581,963619.325902555,602660.703674678,471261.11287434,527877.08254015,-1211596.0775955,64433.4835743343,1688571.30867338],"y":[-187407.202959543,549287.304917815,85946.6639209321,89809.8055439567,304197.314381109,-250630.799549259,-370973.902133611,277785.29998333,126177.293778808,-484546.370347696,129179.468069339,-110589.928830888,-120541.782049278,-558287.285069333,339103.68268931],"z":[453288.274958443,-164874.661364243,105642.044912724,140990.272939514,228914.923366101,-11370.7903122676,-230390.086561291,-320132.303509603,278143.428539124,-109886.089499411,105435.023751819,65445.2533584074,-42602.8770476994,15142.060083232,259427.094967338],"type":"scatter3d","mode":"markers","name":"Caucasian_American","marker":{"color":"rgba(117,112,179,1)","line":{"color":"rgba(117,112,179,1)"}},"textfont":{"color":"rgba(117,112,179,1)"},"error_y":{"color":"rgba(117,112,179,1)"},"error_x":{"color":"rgba(117,112,179,1)"},"line":{"color":"rgba(117,112,179,1)"},"frame":null},{"x":[-954318.863345667,-172032.536883695,184025.483503864,-140766.536258928,-597065.572068181,-222599.692905327,1494948.31527561,-59856.2869103183,547321.253483613,437165.702451831,217896.226535602,-450259.488661536,-292387.13896002,-1216230.04964235],"y":[138465.850399628,502639.269282457,786839.199015143,-87282.0808489276,-179298.576552183,-96413.730363207,-247830.756351568,-318168.678997766,-457675.880711732,-356748.841614771,488565.790725704,296161.608119268,-221533.183279004,-433821.539547759],"z":[135648.919356215,155339.153463123,-157590.214381606,259209.307112512,-342666.93358393,-631791.414125601,-384415.853753897,-533452.889839404,718518.110445435,407934.387426665,-13489.339280251,-98562.5026960845,-9955.60165754406,-299699.164963146],"type":"scatter3d","mode":"markers","name":"African_American","marker":{"color":"rgba(27,158,119,1)","line":{"color":"rgba(27,158,119,1)"}},"textfont":{"color":"rgba(27,158,119,1)"},"error_y":{"color":"rgba(27,158,119,1)"},"error_x":{"color":"rgba(27,158,119,1)"},"line":{"color":"rgba(27,158,119,1)"},"frame":null},{"x":[659974.244667412],"y":[542144.516070678],"z":[-70433.1788337212],"type":"scatter3d","mode":"markers","name":"Asian_American","marker":{"color":"rgba(217,95,2,1)","line":{"color":"rgba(217,95,2,1)"}},"textfont":{"color":"rgba(217,95,2,1)"},"error_y":{"color":"rgba(217,95,2,1)"},"error_x":{"color":"rgba(217,95,2,1)"},"line":{"color":"rgba(217,95,2,1)"},"frame":null},{"x":[151596.269546688],"y":[-174552.527690999],"z":[92235.6467290363],"type":"scatter3d","mode":"markers","name":"Eastern_African","marker":{"color":"rgba(231,41,138,1)","line":{"color":"rgba(231,41,138,1)"}},"textfont":{"color":"rgba(231,41,138,1)"},"error_y":{"color":"rgba(231,41,138,1)"},"error_x":{"color":"rgba(231,41,138,1)"},"line":{"color":"rgba(231,41,138,1)"},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-820530446598e652a607" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-820530446598e652a607">{"x":{"visdat":{"97a2a530f11":["function () ","plotlyVisDat"]},"cur_data":"97a2a530f11","attrs":{"97a2a530f11":{"x":{},"y":{},"z":{},"color":{},"colors":["#7570b3","#1b9e77","#d95f02","#e7298a"],"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d","mode":"markers","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"scene":{"xaxis":{"title":"PC1"},"yaxis":{"title":"PC2"},"zaxis":{"title":"PC3"}},"hovermode":"closest","showlegend":true},"source":"A","config":{"showSendToCloud":false},"data":[{"x":[-1529671.24100752,-334757.29228236,-612190.108321944,-954148.72411323,-902822.044248369,609478.534018162,838302.877830159,191569.728652581,963619.325902555,602660.703674678,471261.11287434,527877.08254015,-1211596.0775955,64433.4835743343,1688571.30867338],"y":[-187407.202959543,549287.304917815,85946.6639209321,89809.8055439567,304197.314381109,-250630.799549259,-370973.902133611,277785.29998333,126177.293778808,-484546.370347696,129179.468069339,-110589.928830888,-120541.782049278,-558287.285069333,339103.68268931],"z":[453288.274958443,-164874.661364243,105642.044912724,140990.272939514,228914.923366101,-11370.7903122676,-230390.086561291,-320132.303509603,278143.428539124,-109886.089499411,105435.023751819,65445.2533584074,-42602.8770476994,15142.060083232,259427.094967338],"type":"scatter3d","mode":"markers","name":"Caucasian_American","marker":{"color":"rgba(117,112,179,1)","line":{"color":"rgba(117,112,179,1)"}},"textfont":{"color":"rgba(117,112,179,1)"},"error_y":{"color":"rgba(117,112,179,1)"},"error_x":{"color":"rgba(117,112,179,1)"},"line":{"color":"rgba(117,112,179,1)"},"frame":null},{"x":[-954318.863345667,-172032.536883695,184025.483503864,-140766.536258928,-597065.572068181,-222599.692905327,1494948.31527561,-59856.2869103183,547321.253483613,437165.702451831,217896.226535602,-450259.488661536,-292387.13896002,-1216230.04964235],"y":[138465.850399628,502639.269282457,786839.199015143,-87282.0808489276,-179298.576552183,-96413.730363207,-247830.756351568,-318168.678997766,-457675.880711732,-356748.841614771,488565.790725704,296161.608119268,-221533.183279004,-433821.539547759],"z":[135648.919356215,155339.153463123,-157590.214381606,259209.307112512,-342666.93358393,-631791.414125601,-384415.853753897,-533452.889839404,718518.110445435,407934.387426665,-13489.339280251,-98562.5026960845,-9955.60165754406,-299699.164963146],"type":"scatter3d","mode":"markers","name":"African_American","marker":{"color":"rgba(27,158,119,1)","line":{"color":"rgba(27,158,119,1)"}},"textfont":{"color":"rgba(27,158,119,1)"},"error_y":{"color":"rgba(27,158,119,1)"},"error_x":{"color":"rgba(27,158,119,1)"},"line":{"color":"rgba(27,158,119,1)"},"frame":null},{"x":[659974.244667412],"y":[542144.516070678],"z":[-70433.1788337212],"type":"scatter3d","mode":"markers","name":"Asian_American","marker":{"color":"rgba(217,95,2,1)","line":{"color":"rgba(217,95,2,1)"}},"textfont":{"color":"rgba(217,95,2,1)"},"error_y":{"color":"rgba(217,95,2,1)"},"error_x":{"color":"rgba(217,95,2,1)"},"line":{"color":"rgba(217,95,2,1)"},"frame":null},{"x":[151596.269546688],"y":[-174552.527690999],"z":[92235.6467290363],"type":"scatter3d","mode":"markers","name":"Eastern_African","marker":{"color":"rgba(231,41,138,1)","line":{"color":"rgba(231,41,138,1)"}},"textfont":{"color":"rgba(231,41,138,1)"},"error_y":{"color":"rgba(231,41,138,1)"},"error_x":{"color":"rgba(231,41,138,1)"},"line":{"color":"rgba(231,41,138,1)"},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 ```
 
 ## Heatmap and Clustering of DEGs (P < 0.01)
@@ -1253,21 +1253,21 @@ dev.off()
 ##                 2
 ```
 
-![](ComprehensiveAnalysis_2021_files/figure-html/EPIC_Import-1.png)<!-- -->![](ComprehensiveAnalysis_2021_files/figure-html/EPIC_Import-2.png)<!-- -->
+![](README_files/figure-html/EPIC_Import-1.png)<!-- -->![](README_files/figure-html/EPIC_Import-2.png)<!-- -->
 
 ```
 ## quartz_off_screen 
 ##                 2
 ```
 
-![](ComprehensiveAnalysis_2021_files/figure-html/EPIC_Import-3.png)<!-- -->
+![](README_files/figure-html/EPIC_Import-3.png)<!-- -->
 
 ```
 ## quartz_off_screen 
 ##                 2
 ```
 
-![](ComprehensiveAnalysis_2021_files/figure-html/EPIC_Import-4.png)<!-- -->
+![](README_files/figure-html/EPIC_Import-4.png)<!-- -->
 
 ```
 ## quartz_off_screen 
@@ -1312,7 +1312,7 @@ dev.off()
 plotPotentialSNPs(x, MSet)
 ```
 
-![](ComprehensiveAnalysis_2021_files/figure-html/SNPs-1.png)<!-- -->
+![](README_files/figure-html/SNPs-1.png)<!-- -->
 
 ```r
 SNPs<-merge(x, as.data.frame(getM(MSet)), by = "row.names")
@@ -1505,7 +1505,7 @@ qc<-getQC(MSet)
 plotQC(qc)
 ```
 
-![](ComprehensiveAnalysis_2021_files/figure-html/African American.Caucasian_American-1.png)<!-- -->
+![](README_files/figure-html/African American.Caucasian_American-1.png)<!-- -->
 
 ```r
 ##Density plot
@@ -1699,7 +1699,7 @@ myColor <- colorRampPalette(c("dodgerblue4", "white", "brown4"))(paletteLength)
 pheatmap(Enrichment_Region, color = myColor, cluster_rows = FALSE, cluster_cols = FALSE)
 ```
 
-![](ComprehensiveAnalysis_2021_files/figure-html/Methylation Distribution-1.png)<!-- -->
+![](README_files/figure-html/Methylation Distribution-1.png)<!-- -->
 
 ```r
 ##Make a Table of the CpG Methylation Distribution
@@ -1821,8 +1821,8 @@ q #must comment out for PDF generation via knitr (Pandoc).
 ```
 
 ```{=html}
-<div id="htmlwidget-4bb55bf61ae4e91cef1e" style="width:672px;height:480px;" class="plotly html-widget"></div>
-<script type="application/json" data-for="htmlwidget-4bb55bf61ae4e91cef1e">{"x":{"visdat":{"10943b6d4374":["function () ","plotlyVisDat"]},"cur_data":"10943b6d4374","attrs":{"10943b6d4374":{"z":{},"text":["Promoter","5'UTR","1stExon","Body","ExonBnd","3'UTR"],"colors":["#BEBEBE","#CCB893","#DAB269","#E9AD3F","#F7A715","#FF9200","#FF6E00","#FF4900","#FF2400","#FF0000"],"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"surface","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"scene":{"xaxis":{"title":"CpG Region","type":"category","zeroline":true,"showline":true,"zerolinewidth":4,"zerolinecolor":"darkgrey","linecolor":"darkgrey","linewidth":4,"titlefont":{"family":"times","size":16,"color":"black"},"tickfont":{"family":"times","size":16,"color":"black"}},"yaxis":{"title":"Gene Region","type":"category","zeroline":true,"showline":true,"zerolinewidth":4,"zerolinecolor":"darkgrey","linecolor":"darkgrey","linewidth":4,"titlefont":{"family":"times","size":16,"color":"black"},"tickfont":{"family":"times","size":16,"color":"black"}},"zaxis":{"title":"Number of DMPs","zerolinewidth":4,"zerolinecolor":"darkgrey","linecolor":"darkgrey","linewidth":4,"titlefont":{"family":"times","size":16,"color":"black"},"tickfont":{"family":"times","size":16,"color":"black"}}},"hovermode":"closest","showlegend":false,"legend":{"yanchor":"top","y":0.5}},"source":"A","config":{"showSendToCloud":false},"data":[{"colorbar":{"title":"Enrichment_Region","ticklen":2,"len":0.5,"lenmode":"fraction","y":1,"yanchor":"top"},"colorscale":[["0","rgba(190,190,190,1)"],["0.0416666666666667","rgba(196,188,174,1)"],["0.0833333333333333","rgba(201,185,158,1)"],["0.125","rgba(206,183,142,1)"],["0.166666666666667","rgba(212,181,126,1)"],["0.208333333333333","rgba(217,179,110,1)"],["0.25","rgba(222,177,95,1)"],["0.291666666666667","rgba(228,175,80,1)"],["0.333333333333333","rgba(233,173,63,1)"],["0.375","rgba(238,171,50,1)"],["0.416666666666667","rgba(244,169,35,1)"],["0.458333333333333","rgba(248,164,19,1)"],["0.5","rgba(251,157,11,1)"],["0.541666666666667","rgba(254,149,3,1)"],["0.583333333333333","rgba(255,137,0,1)"],["0.625","rgba(255,124,0,1)"],["0.666666666666667","rgba(255,110,0,1)"],["0.708333333333333","rgba(255,97,0,1)"],["0.75","rgba(255,83,0,1)"],["0.791666666666667","rgba(255,69,0,1)"],["0.833333333333333","rgba(255,57,0,1)"],["0.875","rgba(255,42,0,1)"],["0.916666666666667","rgba(255,30,0,1)"],["0.958333333333333","rgba(255,19,0,1)"],["1","rgba(255,0,0,1)"]],"showscale":true,"z":[[0.128569289569748,0.135822515232267,0.155198834270766,0.182368236572356,0.156828904460773,0.13201295259128],[0.05747596205554,0.0620396600566572,0.0677872183228666,0.0905559931553359,0.066765873015873,0.0582757584860318],[0.0564208691863631,0.0434782608695652,0.070516717325228,0.0847120048829066,0.0715036803364879,0.0453400503778338],[0.0600375234521576,0.0646732964025896,0.069782159749517,0.0974912397618075,0.07495900679316,0.0661616161616162],[0.0463516204961072,0.0348432055749129,0.0659090909090909,0.0752212389380531,0.0555555555555556,0.037593984962406],[0.063012226252855,0.0531746031746032,0.0837796480489671,0.109983766233766,0.0596877869605142,0.0493358633776091]],"text":["Promoter","5'UTR","1stExon","Body","ExonBnd","3'UTR"],"type":"surface","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-edcb8a0bca3e032950b9" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-edcb8a0bca3e032950b9">{"x":{"visdat":{"97a48063f9a":["function () ","plotlyVisDat"]},"cur_data":"97a48063f9a","attrs":{"97a48063f9a":{"z":{},"text":["Promoter","5'UTR","1stExon","Body","ExonBnd","3'UTR"],"colors":["#BEBEBE","#CCB893","#DAB269","#E9AD3F","#F7A715","#FF9200","#FF6E00","#FF4900","#FF2400","#FF0000"],"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"surface","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"scene":{"xaxis":{"title":"CpG Region","type":"category","zeroline":true,"showline":true,"zerolinewidth":4,"zerolinecolor":"darkgrey","linecolor":"darkgrey","linewidth":4,"titlefont":{"family":"times","size":16,"color":"black"},"tickfont":{"family":"times","size":16,"color":"black"}},"yaxis":{"title":"Gene Region","type":"category","zeroline":true,"showline":true,"zerolinewidth":4,"zerolinecolor":"darkgrey","linecolor":"darkgrey","linewidth":4,"titlefont":{"family":"times","size":16,"color":"black"},"tickfont":{"family":"times","size":16,"color":"black"}},"zaxis":{"title":"Number of DMPs","zerolinewidth":4,"zerolinecolor":"darkgrey","linecolor":"darkgrey","linewidth":4,"titlefont":{"family":"times","size":16,"color":"black"},"tickfont":{"family":"times","size":16,"color":"black"}}},"hovermode":"closest","showlegend":false,"legend":{"yanchor":"top","y":0.5}},"source":"A","config":{"showSendToCloud":false},"data":[{"colorbar":{"title":"Enrichment_Region","ticklen":2,"len":0.5,"lenmode":"fraction","y":1,"yanchor":"top"},"colorscale":[["0","rgba(190,190,190,1)"],["0.0416666666666667","rgba(196,188,174,1)"],["0.0833333333333333","rgba(201,185,158,1)"],["0.125","rgba(206,183,142,1)"],["0.166666666666667","rgba(212,181,126,1)"],["0.208333333333333","rgba(217,179,110,1)"],["0.25","rgba(222,177,95,1)"],["0.291666666666667","rgba(228,175,80,1)"],["0.333333333333333","rgba(233,173,63,1)"],["0.375","rgba(238,171,50,1)"],["0.416666666666667","rgba(244,169,35,1)"],["0.458333333333333","rgba(248,164,19,1)"],["0.5","rgba(251,157,11,1)"],["0.541666666666667","rgba(254,149,3,1)"],["0.583333333333333","rgba(255,137,0,1)"],["0.625","rgba(255,124,0,1)"],["0.666666666666667","rgba(255,110,0,1)"],["0.708333333333333","rgba(255,97,0,1)"],["0.75","rgba(255,83,0,1)"],["0.791666666666667","rgba(255,69,0,1)"],["0.833333333333333","rgba(255,57,0,1)"],["0.875","rgba(255,42,0,1)"],["0.916666666666667","rgba(255,30,0,1)"],["0.958333333333333","rgba(255,19,0,1)"],["1","rgba(255,0,0,1)"]],"showscale":true,"z":[[0.128569289569748,0.135822515232267,0.155198834270766,0.182368236572356,0.156828904460773,0.13201295259128],[0.05747596205554,0.0620396600566572,0.0677872183228666,0.0905559931553359,0.066765873015873,0.0582757584860318],[0.0564208691863631,0.0434782608695652,0.070516717325228,0.0847120048829066,0.0715036803364879,0.0453400503778338],[0.0600375234521576,0.0646732964025896,0.069782159749517,0.0974912397618075,0.07495900679316,0.0661616161616162],[0.0463516204961072,0.0348432055749129,0.0659090909090909,0.0752212389380531,0.0555555555555556,0.037593984962406],[0.063012226252855,0.0531746031746032,0.0837796480489671,0.109983766233766,0.0596877869605142,0.0493358633776091]],"text":["Promoter","5'UTR","1stExon","Body","ExonBnd","3'UTR"],"type":"surface","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 ```
 
 ## Heatmap and Hierarchical Clustering of Differential Methylation (P<0.05)
@@ -1947,7 +1947,7 @@ p = ggplot(Volcano_data, aes(Methylation, minuslogpvalue, color = sig)) +
 p
 ```
 
-![](ComprehensiveAnalysis_2021_files/figure-html/Volcano-1.png)<!-- -->
+![](README_files/figure-html/Volcano-1.png)<!-- -->
 
 ```r
 pdf(file = paste0("../3_Output/2_Methyl/", COMPARISON, "/", COMPARISON, "Volcano.Plot.pdf"), height = 6, width = 5)
@@ -2124,7 +2124,7 @@ dendTangle<-dend_list %>% untangle(method = "step1side")
 Test2<-tanglegram(dendTangle, sort = FALSE, common_subtrees_color_lines = TRUE, highlight_distinct_edges  = TRUE, highlight_branches_lwd = TRUE, lwd = 2, edge.lwd = 2, lab.cex=.7)
 ```
 
-![](ComprehensiveAnalysis_2021_files/figure-html/dendrogram.link-1.png)<!-- -->
+![](README_files/figure-html/dendrogram.link-1.png)<!-- -->
 
 ```r
 pdf(file = "../3_Output/3_Combined/TANGLE.pdf", height = 8, width = 10)
@@ -2587,7 +2587,7 @@ sinfo$platform
 ##  collate  en_US.UTF-8                 
 ##  ctype    en_US.UTF-8                 
 ##  tz       Europe/Berlin               
-##  date     2021-01-19
+##  date     2021-01-20
 ```
 
 ```r

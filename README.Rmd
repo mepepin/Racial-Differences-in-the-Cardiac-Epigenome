@@ -327,7 +327,7 @@ ggforest(fit.coxph, data = Outcomes)
 dev.off()
 ```
 
-# Figure 1: Pilot Analysis - Illumina(R) HumanMethylation 450k Array [GSE109097](https://www.ncbi.nlm.nih.gov/gds/?term=GSE109097[Accession])
+# Figure 1: Pilot Analysis - Illumina(R) HumanMethylation 450k Array [GSE109097](https://www.ncbi.nlm.nih.gov/gds/?term=GSE109097%5BAccession%5D)
 
 The current study originated from the preliminary analysis of a cohort
 (n = 11) of patients with ischemic and non-ischemic end-stage HF
@@ -416,6 +416,10 @@ To replicate our pilot analysis of DNA methylation in the testing
 cohort, cardiac DNA methylation analysis was again performed using these
 31 cardiac ventricular biopsies
 [(GSE164197)](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE164197).
+This platform permits the analysis of many additional CpG sites, as
+follows:
+
+![](images/EPIC.Distribution.png "Supplemental Figure S1: EPIC Array CpG Distribution")
 
 ```{r EPIC_Import, echo=FALSE}
 library(minfi)
@@ -503,7 +507,18 @@ beta.all<-getBeta(RGSet)
 write.csv(beta.all, "../2_Input/EPIC.betaValues.csv")
 ```
 
-## Figure 4B: SNPs in Methylation Data
+## Supplemental Figure S2: Outlier (LVAD054)
+
+```{r outliers}
+par(mfrow=c(1,1))
+barplot(colMeans(detP), col=PLOT.COL[factor(targets$Race)], las=2, 
+        cex.names=0.8, ylim=c(0,0.005), ylab="Mean detection p-values")
+abline(h=0.05,col="red")
+legend("topleft", legend=levels(factor(targets$Race)), fill=PLOT.COL, 
+       bg="white")
+```
+
+## Supplemental Figure S4, Figure 4B: SNPs in Methylation Data
 
 SNPs have been shown to confound the interpretation of methylation
 arrays when mutations exist within the CpG sites. To address this
@@ -751,6 +766,33 @@ ggdraw(p2)
 dev.off()
 
 ggdraw(p2)
+```
+
+## Supplemental Figure S3: MDS Plot
+
+```{r MDS.range, echo=FALSE,results='hide',fig.keep='all'}
+par(mfrow=c(2,2))
+PLOT.COL <- brewer.pal(8,"Dark2")
+#top 1 000
+plotMDS(getM(gRatioSet.quantile), cex = 1, top=1000, gene.selection="common",
+        col=PLOT.COL[factor(targets$Race)], main = "MDS - Top 1,000")
+legend("topright", legend=levels(factor(targets$Race)), text.col=PLOT.COL,
+       bg="white", cex=0.7)
+# Top 10 000
+plotMDS(getM(gRatioSet.quantile), top=10000, gene.selection="common",
+        col=PLOT.COL[factor(targets$Race)], polygon = TRUE, main = "MDS - Top 10,000")
+legend("topright", legend=levels(factor(targets$Race)), text.col=PLOT.COL,
+       bg="white", cex=0.7)
+# Top 50 000
+plotMDS(getM(gRatioSet.quantile), top=50000, gene.selection="common",
+        col=PLOT.COL[factor(targets$Race)], polygon = TRUE, main = "MDS - Top 50,000")
+legend("topright", legend=levels(factor(targets$Race)), text.col=PLOT.COL,
+       bg="white", cex=0.7)
+# Top 100 000
+plotMDS(getM(gRatioSet.quantile), top=100000, gene.selection="common",
+        col=PLOT.COL[factor(targets$Race)], polygon = TRUE, main = "MDS - Top 500,000")
+legend("topright", legend=levels(factor(targets$Race)), text.col=PLOT.COL,
+       bg="white", cex=0.7)
 ```
 
 # Differential Methylation of African American and Caucasian_American
@@ -1386,7 +1428,7 @@ saveWorkbook(wb_DESeq, file = paste0("../3_Output/1_RNA/", COMPARISON, "/", COMP
 
 ```
 
-### MDS Plot - Transcriptomics
+### Supplemental Figure S4: MDS Plot Transcriptomics
 
 In contrast to our epigenomic analysis, unsupervised MDS failed to
 denote any separation by race (**Supplemental Figure S5**).
@@ -1454,12 +1496,22 @@ MDS_data<-dplyr::select(MDS_data, -external_gene_name)
 ## Create color based on race
 ann_colors = list(Race = c(African_American="#1b9e77", Asian_American = "#d95f02", Caucasian_American="#7570b3", Eastern_African = "#e7298a"))
 ## MDS PLot
-NGENES = 1000
+NGENES = 10000
 mds<-plotMDS.default(MDS_data, gene.selection = "common", top = NGENES, col = colData_all$Color)
 ## Extract genes from this
 MDS_GeneList<-rownames(as.data.frame(mds$ind.top.genes))
 TopGenes_MDS<-subset(results, ensembl_gene_id %in% MDS_GeneList)
 ```
+
+## Supplemental Figure S5: *In Silico* Cell Sorting via Cibersort
+
+Due to the documented importance immune cell composition on cardiac
+phenotype (18, 56), *in-silico* method of cellular deconvolution was
+performed using CIBERSORT (<https://cibersort.stanford.edu>) to infer
+relative enrichment of immunologic cell-types in our cardiac samples. No
+racial differences were noted from this approach.
+
+![](images/Supplemental%20Figure%20S5.png "Supplemental Figure S5: Cibersort Enrichment")
 
 ### QQ Plot
 
@@ -1827,6 +1879,15 @@ plotlist[[i]] = g_plot
 t<-marrangeGrob(grobs = plotlist, legend, nrow=3, ncol=2)
 ggsave(paste0("../3_Output/1_RNA/Candidates/_DEGs_Pathway", VAR1, ".v.", VAR2, ".pdf"), t, width = 6, height = 7)
 ########################################################
+```
+
+## Supplemental Figure S5: Cibersort
+
+```{r cibersort}
+
+
+
+
 ```
 
 # Figure 7: Combining DNA methylation with RNA-sequencing Analysis
@@ -2289,6 +2350,7 @@ All packages and setting are acquired using the following command:
 options(kableExtra.latex.load_packages = FALSE)
 Run_tE<-Sys.time()
 Run_time<-Run_tE - Run_tS
+Run_time
 library(kableExtra)
 sinfo<-devtools::session_info()
 sinfo$platform

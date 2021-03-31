@@ -97,6 +97,89 @@ if (!require("pacman")) install.packages("pacman")
 pacman::p_load(dplyr, Hmisc, openxlsx, corrplot, RColorBrewer, kableExtra, ggplot2, gridExtra, ggpubr, ggsignif, DESeq2, data.table, GenomicFeatures, biomaRt, Haplin, pheatmap, calibrate, ggrepel, tidyr, gtools)
 ```
 
+# Figure 1: Pilot Analysis - Illumina(R) HumanMethylation 450k Array [GSE109097](https://www.ncbi.nlm.nih.gov/gds/?term=GSE109097%5BAccession%5D)
+
+The current study originated from the preliminary analysis of a cohort
+(n = 11) of patients with ischemic and non-ischemic end-stage HF
+(**Figure 1A**). Although we have previously reported that a patient's
+history of ischemic heart diseases is most responsible for global
+differences in cardiac DNA methylation within this cohort [@pepin2018],
+it was noted here that, although the gobal signature encoded ischemic
+status, the most variable CpG probes on the array exhibited a divergent
+bimodal distribution. Dataset is available at
+<https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE109097>
+
+```{r methyl450k}
+#   Differential expression analysis with limma
+library(openxlsx)
+library(magrittr)
+library(dplyr)
+library(ggpubr)
+library(matrixStats)
+library("ggrepel")
+library(ggplot2)
+library(cowplot) 
+options(ggrepel.max.overlaps = Inf)
+m450k<-read.xlsx("../2_Input/_Pilot/Pepin.Wende_2018.xlsx", sheet = "betaData", rowNames = T)
+colData_m450k<-read.xlsx("../2_Input/_Pilot/Pepin.Wende_2018.xlsx", sheet = "colData")
+# MDS in ggplot2
+Ntop = 1000
+RowVar<-rowVars(data.matrix(m450k)) #calculate variances for each row (vector)
+MDS.set<-as.data.frame(cbind(m450k, RowVar))
+MDS_matrix<-MDS.set %>% arrange(desc(RowVar)) %>% top_n(Ntop,RowVar) #Select top N rows by variance
+# Compute MDS
+mds <- MDS_matrix %>% dplyr::select(-RowVar) %>% t(.) %>%
+  dist() %>%          
+  cmdscale() %>%
+  as_tibble()
+colnames(mds) <- c("Dim.1", "Dim.2")
+rownames(mds)<-colnames(m450k)
+mds$Sample_Name<-rownames(mds)
+mds<-dplyr::inner_join(mds, colData_m450k)
+
+#K-means clustering
+clust <- kmeans(mds[,1:2], 2)$cluster %>%
+  as.factor()
+mds <- mds %>%
+  mutate(kmeans.2 = clust)
+# Main plot
+COLOR=c("#1b9e77", "#7570b3")
+pmain <- ggplot(mds, aes(x = Dim.1, y = Dim.2, color = Race))+
+  scale_color_manual(values = COLOR) +
+  theme(panel.background = element_rect("white", colour = "black", size=2), 
+      panel.grid.major = element_line(colour = "gray50", size=.75), 
+      panel.grid.minor = element_line(colour = "gray50", size=0.4),
+      legend.position="bottom",
+      legend.key=element_blank(),
+      axis.text = element_text(size = 12),
+      axis.title = element_text(size = 14, face="bold")) +
+  geom_hline(yintercept = 0, size = 1) + 
+  geom_vline(xintercept=0, size=1) +
+  geom_point()+
+  stat_ellipse()+
+  geom_text_repel(data=mds, aes(label=Sample_Name), show_guide  = F) +
+  labs(x="Principal Component 1", 
+       y="Principal Component 2")
+# Marginal densities along x axis
+xdens <- axis_canvas(pmain, axis = "x")+
+  geom_density(data = mds, aes(x = Dim.1, fill = Race),
+              alpha = 0.7, size = 0.2)+
+  scale_fill_manual(values = COLOR)
+# Marginal densities along y axis
+ydens <- axis_canvas(pmain, axis = "y", coord_flip = TRUE)+ #must set coord_flip = true if using coord_flip() below
+  geom_density(data = mds, aes(x = Dim.2, fill = Race),
+                alpha = 0.7, size = 0.2)+
+  coord_flip()+
+  scale_fill_manual(values = COLOR)
+p1 <- insert_xaxis_grob(pmain, xdens, grid::unit(.2, "null"), position = "top")
+p2<- insert_yaxis_grob(p1, ydens, grid::unit(.2, "null"), position = "right")
+pdf(file="../3_Output/2_Methyl/Pilot.Scatterhist.pdf", height = 7, width = 7, onefile = F)
+ggdraw(p2)
+dev.off()
+
+ggdraw(p2)
+```
+
 # Figure 2: Patient Information
 
 ## Figure 2A: Correlation and Covariate Network Analysis
@@ -297,7 +380,7 @@ library(survminer)
 library(RTCGA.clinical)
 Outcomes<-read.xlsx("../2_Input/1_Patient/Outcomes.xlsx")
 fit<-survfit(Surv(Censor_2yr, Outcome_2yr) ~ Race, data = Outcomes)
-ggsurvplot(fit, data = Outcomes, risk.table = TRUE)
+# ggsurvplot(fit, data = Outcomes, risk.table = TRUE)
 
 ###################################################
 ggsurvplot(
@@ -325,89 +408,6 @@ ggforest(fit.coxph, data = Outcomes)
 pdf(file="../3_Output/_Patient/Cox.Survival.pdf", height = 5, width = 5, onefile = F)
 ggforest(fit.coxph, data = Outcomes)
 dev.off()
-```
-
-# Figure 1: Pilot Analysis - Illumina(R) HumanMethylation 450k Array [GSE109097](https://www.ncbi.nlm.nih.gov/gds/?term=GSE109097%5BAccession%5D)
-
-The current study originated from the preliminary analysis of a cohort
-(n = 11) of patients with ischemic and non-ischemic end-stage HF
-(**Figure 1A**). Although we have previously reported that a patient's
-history of ischemic heart diseases is most responsible for global
-differences in cardiac DNA methylation within this cohort [@pepin2018],
-it was noted here that, although the gobal signature encoded ischemic
-status, the most variable CpG probes on the array exhibited a divergent
-bimodal distribution. Dataset is available at
-<https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE109097>
-
-```{r methyl450k}
-#   Differential expression analysis with limma
-library(openxlsx)
-library(magrittr)
-library(dplyr)
-library(ggpubr)
-library(matrixStats)
-library("ggrepel")
-library(ggplot2)
-library(cowplot) 
-options(ggrepel.max.overlaps = Inf)
-m450k<-read.xlsx("../2_Input/_Pilot/Pepin.Wende_2018.xlsx", sheet = "betaData", rowNames = T)
-colData_m450k<-read.xlsx("../2_Input/_Pilot/Pepin.Wende_2018.xlsx", sheet = "colData")
-# MDS in ggplot2
-Ntop = 1000
-RowVar<-rowVars(data.matrix(m450k)) #calculate variances for each row (vector)
-MDS.set<-as.data.frame(cbind(m450k, RowVar))
-MDS_matrix<-MDS.set %>% arrange(desc(RowVar)) %>% top_n(Ntop,RowVar) #Select top N rows by variance
-# Compute MDS
-mds <- MDS_matrix %>% dplyr::select(-RowVar) %>% t(.) %>%
-  dist() %>%          
-  cmdscale() %>%
-  as_tibble()
-colnames(mds) <- c("Dim.1", "Dim.2")
-rownames(mds)<-colnames(m450k)
-mds$Sample_Name<-rownames(mds)
-mds<-dplyr::inner_join(mds, colData_m450k)
-
-#K-means clustering
-clust <- kmeans(mds[,1:2], 2)$cluster %>%
-  as.factor()
-mds <- mds %>%
-  mutate(kmeans.2 = clust)
-# Main plot
-COLOR=c("#1b9e77", "#7570b3")
-pmain <- ggplot(mds, aes(x = Dim.1, y = Dim.2, color = Race))+
-  scale_color_manual(values = COLOR) +
-  theme(panel.background = element_rect("white", colour = "black", size=2), 
-      panel.grid.major = element_line(colour = "gray50", size=.75), 
-      panel.grid.minor = element_line(colour = "gray50", size=0.4),
-      legend.position="bottom",
-      legend.key=element_blank(),
-      axis.text = element_text(size = 12),
-      axis.title = element_text(size = 14, face="bold")) +
-  geom_hline(yintercept = 0, size = 1) + 
-  geom_vline(xintercept=0, size=1) +
-  geom_point()+
-  stat_ellipse()+
-  geom_text_repel(data=mds, aes(label=Sample_Name), show_guide  = F) +
-  labs(x="Principal Component 1", 
-       y="Principal Component 2")
-# Marginal densities along x axis
-xdens <- axis_canvas(pmain, axis = "x")+
-  geom_density(data = mds, aes(x = Dim.1, fill = Race),
-              alpha = 0.7, size = 0.2)+
-  scale_fill_manual(values = COLOR)
-# Marginal densities along y axis
-ydens <- axis_canvas(pmain, axis = "y", coord_flip = TRUE)+ #must set coord_flip = true if using coord_flip() below
-  geom_density(data = mds, aes(x = Dim.2, fill = Race),
-                alpha = 0.7, size = 0.2)+
-  coord_flip()+
-  scale_fill_manual(values = COLOR)
-p1 <- insert_xaxis_grob(pmain, xdens, grid::unit(.2, "null"), position = "top")
-p2<- insert_yaxis_grob(p1, ydens, grid::unit(.2, "null"), position = "right")
-pdf(file="../3_Output/2_Methyl/Pilot.Scatterhist.pdf", height = 7, width = 7, onefile = F)
-ggdraw(p2)
-dev.off()
-
-ggdraw(p2)
 ```
 
 # Genome-wide DNA methylation - Illumina(R) HumanMethylation EPIC Array [(GSE164197)](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE164197)
@@ -489,7 +489,7 @@ pdf(file=paste0("../3_Output/2_Methyl/", COMPARISON, "/", COMPARISON, "_QC.Methy
 plotQC(qc)
 dev.off()
 ##Density plot
-densityPlot(RGSet, sampGroups = phenoData$Race, main= "Beta", xlab = "Beta")
+# densityPlot(RGSet, sampGroups = phenoData$Race, main= "Beta", xlab = "Beta")
 pdf(file=paste0("../3_Output/2_Methyl/", COMPARISON, "/", COMPARISON, "_densityPlot.pdf"))
 densityPlot(RGSet, sampGroups = phenoData$Race, main= "Beta", xlab = "Beta")
 dev.off()
@@ -790,7 +790,7 @@ legend("topright", legend=levels(factor(targets$Race)), text.col=PLOT.COL,
        bg="white", cex=0.7)
 # Top 100 000
 plotMDS(getM(gRatioSet.quantile), top=100000, gene.selection="common",
-        col=PLOT.COL[factor(targets$Race)], polygon = TRUE, main = "MDS - Top 500,000")
+        col=PLOT.COL[factor(targets$Race)], polygon = TRUE, main = "MDS - Top 100,000")
 legend("topright", legend=levels(factor(targets$Race)), text.col=PLOT.COL,
        bg="white", cex=0.7)
 ```
@@ -1879,15 +1879,6 @@ plotlist[[i]] = g_plot
 t<-marrangeGrob(grobs = plotlist, legend, nrow=3, ncol=2)
 ggsave(paste0("../3_Output/1_RNA/Candidates/_DEGs_Pathway", VAR1, ".v.", VAR2, ".pdf"), t, width = 6, height = 7)
 ########################################################
-```
-
-## Supplemental Figure S5: Cibersort
-
-```{r cibersort}
-
-
-
-
 ```
 
 # Figure 7: Combining DNA methylation with RNA-sequencing Analysis

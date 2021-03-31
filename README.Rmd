@@ -1204,14 +1204,14 @@ dev.off()
 ## Interactive Volcano Plot
 Filtered_methyl<-filter(Volcano_data, P.Value<0.05, abs(Methylation.Diff)>5)
 
-library(plotly)
-fig <- plot_ly(
-  Filtered_methyl, x = ~Methylation, y = ~minuslogpvalue,
-  # Hover text:
-  text = ~paste("CpG: ", Methylation, '<br>P-value:', minuslogpvalue, '<br>CpG-ID:', Row.names, '<br>CpG-Region:', Relation_to_Island, '<br>Gene-Symbol:', UCSC_RefGene_Name),
-  color = ~sig, size = ~minuslogpvalue
-)
-fig
+# library(plotly)
+# fig <- plot_ly(
+#   Filtered_methyl, x = ~Methylation, y = ~minuslogpvalue,
+#   # Hover text:
+#   text = ~paste("CpG: ", Methylation, '<br>P-value:', minuslogpvalue, '<br>CpG-ID:', Row.names, '<br>CpG-Region:', Relation_to_Island, '<br>Gene-Symbol:', UCSC_RefGene_Name),
+#   color = ~sig, size = ~minuslogpvalue
+# )
+# fig
 ```
 
 # RNA-Sequencing Analysis ([GSE164197](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE164197))

@@ -8,6 +8,8 @@ output:
     code_folding: hide
     toc: yes
     toc_float: yes
+  pdf_document:
+    toc: yes
 header-includes:
 - \usepackage{booktabs}
 - \usepackage{longtable}
@@ -23,8 +25,8 @@ header-includes:
 mainfont: Times
 fontsize: 10pt
 always_allow_html: yes
-editor_options: 
-  markdown: 
+editor_options:
+  markdown:
     wrap: 72
 bibliography: references.bib
 ---
@@ -421,6 +423,9 @@ follows:
 
 ![](images/EPIC.Distribution.png "Supplemental Figure S1: EPIC Array CpG Distribution")
 
+**Supplemental Figure S1** - Illumina HumanMethylation EPIC Array CpG
+Distribution.
+
 ```{r EPIC_Import, echo=FALSE}
 library(minfi)
 library(limma)
@@ -509,7 +514,7 @@ write.csv(beta.all, "../2_Input/EPIC.betaValues.csv")
 
 ## Supplemental Figure S2: Outlier (LVAD054)
 
-```{r outliers}
+```{r outliers, fig.cap="Supplemental Figure S2: LVAD054 Outlier Identification"}
 par(mfrow=c(1,1))
 barplot(colMeans(detP), col=PLOT.COL[factor(targets$Race)], las=2, 
         cex.names=0.8, ylim=c(0,0.005), ylab="Mean detection p-values")
@@ -534,7 +539,7 @@ racial differences, the beta values within these SNPs were clustered via
 hierarchical clustering, resulting in a complete separation according to
 patient race (see figure).
 
-```{r SNPs}
+```{r SNPs, fig.cap = "Supplemental Figure S4: Putative SNP Identification from CpG Probe Intensity"}
 #Remove SNPs
 ##Option 1: Built-in function that removes all known SNPs
 gRatioSet_noSNPs<-dropLociWithSnps(gRatioSet.quantile, snps = c("SBE", "CpG"), maf = 0) #Doing this removes ~40% of all SNPs in the EPIC array
@@ -694,7 +699,7 @@ plotMDS(getM(gRatioSet.quantile), top=50000, gene.selection="common",
 legend("topright", legend=levels(factor(targets$Race)), text.col=PLOT.COL,
        bg="white", cex=0.7)
 # Top 100 000
-plotMDS(getM(gRatioSet.quantile), top=100000, gene.selection="common",
+plotMDS(getM(gRatioSet.quantile), top=300000, gene.selection="common",
         col=PLOT.COL[factor(targets$Race)], polygon = TRUE, main = "MDS - Top 500,000")
 legend("topright", legend=levels(factor(targets$Race)), text.col=PLOT.COL,
        bg="white", cex=0.7)
@@ -770,36 +775,15 @@ ggdraw(p2)
 
 ## Supplemental Figure S3: MDS Plot
 
-```{r MDS.range, echo=FALSE,results='hide',fig.keep='all'}
-par(mfrow=c(2,2))
-PLOT.COL <- brewer.pal(8,"Dark2")
-#top 1 000
-plotMDS(getM(gRatioSet.quantile), cex = 1, top=1000, gene.selection="common",
-        col=PLOT.COL[factor(targets$Race)], main = "MDS - Top 1,000")
-legend("topright", legend=levels(factor(targets$Race)), text.col=PLOT.COL,
-       bg="white", cex=0.7)
-# Top 10 000
-plotMDS(getM(gRatioSet.quantile), top=10000, gene.selection="common",
-        col=PLOT.COL[factor(targets$Race)], polygon = TRUE, main = "MDS - Top 10,000")
-legend("topright", legend=levels(factor(targets$Race)), text.col=PLOT.COL,
-       bg="white", cex=0.7)
-# Top 50 000
-plotMDS(getM(gRatioSet.quantile), top=50000, gene.selection="common",
-        col=PLOT.COL[factor(targets$Race)], polygon = TRUE, main = "MDS - Top 50,000")
-legend("topright", legend=levels(factor(targets$Race)), text.col=PLOT.COL,
-       bg="white", cex=0.7)
-# Top 100 000
-plotMDS(getM(gRatioSet.quantile), top=100000, gene.selection="common",
-        col=PLOT.COL[factor(targets$Race)], polygon = TRUE, main = "MDS - Top 100,000")
-legend("topright", legend=levels(factor(targets$Race)), text.col=PLOT.COL,
-       bg="white", cex=0.7)
-```
+![](images/paste-4C2D39DF.png){width="1189"}
 
-# Differential Methylation of African American and Caucasian_American
+**Supplementary Figure S3 - MDS Plots**
+
+## Differential Methylation of African American and Caucasian_American
 
 ## Using Minfi to compute differential expression
 
-Owing to the remarkable separation by patient race, we chose to identify
+Owing to the apparent separation by patient race, we chose to identify
 the CpG sites responsible for a race-based epigenomic difference.
 
 ```{r African American.Caucasian_American}
@@ -1428,7 +1412,7 @@ saveWorkbook(wb_DESeq, file = paste0("../3_Output/1_RNA/", COMPARISON, "/", COMP
 
 ```
 
-### Supplemental Figure S4: MDS Plot Transcriptomics
+### Supplemental Figure S5: MDS Plot Transcriptomics
 
 In contrast to our epigenomic analysis, unsupervised MDS failed to
 denote any separation by race (**Supplemental Figure S5**).
@@ -1503,7 +1487,7 @@ MDS_GeneList<-rownames(as.data.frame(mds$ind.top.genes))
 TopGenes_MDS<-subset(results, ensembl_gene_id %in% MDS_GeneList)
 ```
 
-## Supplemental Figure S5: *In Silico* Cell Sorting via Cibersort
+## Supplemental Figure S6: *In Silico* Cell Sorting via Cibersort
 
 Due to the documented importance immune cell composition on cardiac
 phenotype (18, 56), *in-silico* method of cellular deconvolution was
@@ -1511,7 +1495,9 @@ performed using CIBERSORT (<https://cibersort.stanford.edu>) to infer
 relative enrichment of immunologic cell-types in our cardiac samples. No
 racial differences were noted from this approach.
 
-![](images/Supplemental%20Figure%20S5.png "Supplemental Figure S5: Cibersort Enrichment")
+![](images/Supplemental%20Figure%20S5.png "Supplemental Figure S5: Cibersort Enrichment"){width="894"}
+
+**Supplemental Figure S6**
 
 ### QQ Plot
 
